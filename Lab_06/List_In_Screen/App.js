@@ -1,52 +1,95 @@
-import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
-
-const DATA = [
-  {
-    id: '1',
-    image: 'https://via.placeholder.com/100', // replace with your image URL
-    name: 'Ca nấu lẩu, nấu mì mini',
-    shop: 'Shop Devang',
-  },
-  {
-    id: '2',
-    image: 'https://via.placeholder.com/100',
-    name: '1KG KHÔ GÀ BƠ TỎI',
-    shop: 'Shop LTD Food',
-  },
-  {
-    id: '3',
-    image: 'https://via.placeholder.com/100',
-    name: 'Xe cần cẩu đa năng',
-    shop: 'Thế giới đồ chơi',
-  },
-  {
-    id: '4',
-    image: 'https://via.placeholder.com/100',
-    name: 'Đồ chơi dạng mô hình',
-    shop: 'Thế giới đồ chơi',
-  },
-  {
-    id: '5',
-    image: 'https://via.placeholder.com/100',
-    name: 'Lãnh đạo giản đơn',
-    shop: 'Minh Long Book',
-  },
-  {
-    id: '6',
-    image: 'https://via.placeholder.com/100',
-    name: 'Hiểu lòng con trẻ',
-    shop: 'Minh Long Book',
-  },
-  {
-    id: '7',
-    image: 'https://via.placeholder.com/100',
-    name: 'Donald Trump: Thiên tài lãnh đạo',
-    shop: 'Minh Long Book',
-  },
-];
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import Screen_4b from "./Screen_4b";
 
 const App = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Hàm gọi API từ MockAPI
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://6459e17165bd868e930aa3ad.mockapi.io/users");
+      const json = await response.json();
+      setData(json); // Cập nhật dữ liệu lấy từ API
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  // Gọi API khi component được mount
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const navbar = (
+    <View>
+      <View
+        style={{
+          backgroundColor: "#1BA9FF",
+          marginTop: 30,
+          alignItems: "center",
+          paddingHorizontal: 30,
+          height: 42,
+          justifyContent: "space-between",
+          flexDirection: "row",
+        }}
+      >
+        <Image
+          source={require("./assets/back.png")}
+          style={styles.imageicon}
+        />
+        <Text style={{ color: "white", fontSize: 23 }}>Chat</Text>
+        <Image
+          source={require("./assets/online-shopping.png")}
+          style={styles.imageicon}
+        />
+      </View>
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <Text style={{ color: "black", fontSize: 15, padding: 10 }}>
+          Bạn có thắc mắc với sản phẩm vừa xem đừng ngại chát với shop!
+        </Text>
+      </View>
+    </View>
+  );
+
+  const footer = (
+    <View>
+      <View
+        style={{
+          backgroundColor: "#1BA9FF",
+          alignItems: "center",
+          paddingHorizontal: 30,
+          height: 42,
+          justifyContent: "space-between",
+          flexDirection: "row",
+        }}
+      >
+        <Image
+          source={require("./assets/more-information.png")}
+          style={styles.imageicon}
+        />
+        <Image
+          source={require("./assets/interface.png")}
+          style={styles.imageicon}
+        />
+        <Image
+          source={require("./assets/back.png")}
+          style={styles.imageicon}
+        />
+      </View>
+    </View>
+  );
+
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Image source={{ uri: item.image }} style={styles.image} />
@@ -61,35 +104,46 @@ const App = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+    // <View style={styles.container}>
+    //   {navbar}
+    //   {loading ? (
+    //     <Text>Loading...</Text>
+    //   ) : (
+    //     <FlatList
+    //       data={data}
+    //       renderItem={renderItem}
+    //       keyExtractor={(item) => item.id.toString()}
+    //     />
+    //   )}
+    //   {footer}
+    // </View>
+    Screen_4b()
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
+    backgroundColor: "#fff",
   },
   itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 5,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   image: {
     width: 60,
     height: 60,
+    borderRadius: 5,
+  },
+  imageicon: {
+    width: 30,
+    height: 30,
     borderRadius: 5,
   },
   textContainer: {
@@ -98,21 +152,20 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   shopName: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   chatButton: {
-    backgroundColor: '#ff0000',
+    backgroundColor: "#F31111",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 5,
   },
   chatText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
 
