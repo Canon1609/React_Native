@@ -104,20 +104,20 @@ const App = () => {
   );
 
   return (
-    // <View style={styles.container}>
-    //   {navbar}
-    //   {loading ? (
-    //     <Text>Loading...</Text>
-    //   ) : (
-    //     <FlatList
-    //       data={data}
-    //       renderItem={renderItem}
-    //       keyExtractor={(item) => item.id.toString()}
-    //     />
-    //   )}
-    //   {footer}
-    // </View>
-    Screen_4b()
+    <View style={styles.container}>
+      {navbar}
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      )}
+      {footer}
+    </View>
+    //Screen_4b()
   );
 };
 
