@@ -1,6 +1,6 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { View, Text, TextInput } from "react-native";
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,50 +89,35 @@ export default function EditBike({ navigation, route }) {
     };
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Edit Bike</Text>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Add Bike</Text>
             </View>
-            <View style={{padding: 20}}>
-                <View style={{marginBottom: 15}}>
-                    <Text style={{fontSize: 16, marginBottom: 5}}>Name:</Text>
+            <View style={styles.form}>
+                <View style={styles.formGroup}>
+                    <Text style={styles.label}>Name:</Text>
                     <TextInput 
-                        style={{
-                            borderWidth: 1,
-                            borderColor: '#ddd',
-                            borderRadius: 5,
-                            padding: 10
-                        }}
+                        style={styles.input}
                         placeholder="Enter bike name"
                         value={formData.name}
                         onChangeText={(text) => handleChange('name', text)}
                     />
                 </View>
 
-                <View style={{marginBottom: 15}}>
-                    <Text style={{fontSize: 16, marginBottom: 5}}>Image URL:</Text>
+                <View style={styles.formGroup}>
+                    <Text style={styles.label}>Image URL:</Text>
                     <TextInput 
-                        style={{
-                            borderWidth: 1,
-                            borderColor: '#ddd',
-                            borderRadius: 5,
-                            padding: 10
-                        }}
+                        style={styles.input}
                         placeholder="Enter image URL"
                         value={formData.image}
                         onChangeText={(text) => handleChange('image', text)}
                     />
                 </View>
 
-                <View style={{marginBottom: 15}}>
-                    <Text style={{fontSize: 16, marginBottom: 5}}>Price:</Text>
+                <View style={styles.formGroup}>
+                    <Text style={styles.label}>Price:</Text>
                     <TextInput 
-                        style={{
-                            borderWidth: 1,
-                            borderColor: '#ddd',
-                            borderRadius: 5,
-                            padding: 10
-                        }}
+                        style={styles.input}
                         placeholder="Enter price"
                         keyboardType="numeric"
                         value={formData.price?.toString()}
@@ -140,16 +125,10 @@ export default function EditBike({ navigation, route }) {
                     />
                 </View>
 
-                <View style={{marginBottom: 15}}>
-                    <Text style={{fontSize: 16, marginBottom: 5}}>Description:</Text>
+                <View style={styles.formGroup}>
+                    <Text style={styles.label}>Description:</Text>
                     <TextInput 
-                        style={{
-                            borderWidth: 1,
-                            borderColor: '#ddd',
-                            borderRadius: 5,
-                            padding: 10,
-                            height: 100
-                        }}
+                        style={[styles.input, styles.textArea]}
                         placeholder="Enter description"
                         multiline={true}
                         numberOfLines={4}
@@ -158,15 +137,11 @@ export default function EditBike({ navigation, route }) {
                     />
                 </View>
                 
-                <View style={{marginBottom: 15}}>
-                    <Text style={{fontSize: 16, marginBottom: 5}}>Category:</Text>
+                <View style={styles.formGroup}>
+                    <Text style={styles.label}>Category:</Text>
                     <Picker
                         selectedValue={formData.category}
-                        style={{
-                            borderWidth: 1,
-                            borderColor: '#ddd',
-                            borderRadius: 5,
-                        }}
+                        style={styles.picker}
                         onValueChange={(value) => handleChange('category', value)}
                     >
                         {categories.map((category, index) => (
@@ -175,15 +150,10 @@ export default function EditBike({ navigation, route }) {
                     </Picker>
                 </View>
 
-                <View style={{marginBottom: 15}}>
-                    <Text style={{fontSize: 16, marginBottom: 5}}>Sale Percentage:</Text>
+                <View style={styles.formGroup}>
+                    <Text style={styles.label}>Sale Percentage:</Text>
                     <TextInput 
-                        style={{
-                            borderWidth: 1,
-                            borderColor: '#ddd',
-                            borderRadius: 5,
-                            padding: 10
-                        }}
+                        style={styles.input}
                         placeholder="Enter sale percentage"
                         keyboardType="numeric"
                         value={formData.sale?.toString()}
@@ -192,22 +162,85 @@ export default function EditBike({ navigation, route }) {
                 </View>
 
                 <TouchableOpacity 
-                    style={{
-                        backgroundColor: 'purple',
-                        padding: 15,
-                        borderRadius: 5,
-                        alignItems: 'center'
-                    }}
+                    style={styles.saveButton}
                     onPress={handleSave}
                 >
-                    <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>Save Bike</Text>
+                    <Text style={styles.saveButtonText}>Save Bike</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{position: 'absolute', bottom: 0, width: '100%', alignItems: 'center'}}>
-                <TouchableOpacity style={{backgroundColor: 'purple', borderRadius: 10, width: 150, height: 30, justifyContent: 'center', alignItems: 'center', margin: 10}} onPress={() => navigation.navigate('Admin')}>
-                    <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}>Go to Admin</Text>
+            <View style={styles.footer}>
+                <TouchableOpacity style={styles.adminButton} onPress={() => navigation.navigate('Admin')}>
+                    <Text style={styles.adminButtonText}>Go to Admin</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    header: {
+        alignItems: 'center',
+    },
+    headerText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    form: {
+        padding: 10,
+    },
+    formGroup: {
+        marginBottom: 15,
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 5,
+        padding: 5,
+    },
+    textArea: {
+        height: 100,
+    },
+    picker: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 5,
+    },
+    saveButton: {
+        backgroundColor: 'green',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    saveButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    footer: {
+        position: 'absolute',
+        bottom: 10,
+        alignItems: 'center',
+    },
+    adminButton: {
+        backgroundColor: 'blue',
+        borderRadius: 10,
+        width: 150,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 0,
+        marginLeft:130
+    },
+    adminButtonText: {
+        color: 'white',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+});
