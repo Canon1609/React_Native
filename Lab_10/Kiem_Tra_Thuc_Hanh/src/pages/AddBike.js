@@ -43,7 +43,7 @@ export default function EditBike({ navigation, route }) {
 
     const handleSave = async () => {
         try {
-            let url = 'https://64571b781a4c152cf97b4a06.mockapi.io/bike';
+            let url = 'https://6459e17165bd868e930aa3ad.mockapi.io/bikes';
             let method = 'POST';
             let body = { ...formData };
 
